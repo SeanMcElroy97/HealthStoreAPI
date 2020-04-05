@@ -21,7 +21,7 @@ public class Product {
 	private int id;
 	private String title;
 	private String manufacturer;
-	private BigDecimal price;
+	private double price;
 	private String category;
 	private String productImageLink;
 	
@@ -29,13 +29,35 @@ public class Product {
 	private Set<Review> productReviews;
 	
 	
+	//Constructors
+	public Product() {
+		super();
+	}
+	
+	public Product(String title, String manufacturer, double price, String category, String productImageLink) {
+		super();
+		this.title = title;
+		this.manufacturer = manufacturer;
+		this.price = price;
+		this.category = category;
+		this.productImageLink = productImageLink;
+	}
+
+
+
+
+
+
+
+
 	//Utility Methods for adding + removing reviews. synchronizes both sides
     public void addReview(Review review) {
     	productReviews.add(review);
     	review.setProduct(this);
     }
- 
-    public void removeComment(Review review) {
+    
+
+	public void removeReview(Review review) {
        productReviews.remove(review);
        review.setProduct(null);
     }
@@ -60,10 +82,10 @@ public class Product {
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 	
@@ -85,5 +107,14 @@ public class Product {
 	public void setProductReviews(Set<Review> productReviews) {
 		this.productReviews = productReviews;
 	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", title=" + title + ", manufacturer=" + manufacturer + ", price=" + price
+				+ ", category=" + category + ", productImageLink=" + productImageLink + ", productReviews="
+				+ productReviews + "]";
+	}
+	
+	
 	
 }
