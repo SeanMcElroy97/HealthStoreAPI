@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class ProductService {
 	
 	public void updateProduct(Product p) {
 		productRepository.save(p);
+	}
+	
+	public Optional<Product> findProductByID(int pid) {
+		return productRepository.findById(pid);
 	}
 	
 }

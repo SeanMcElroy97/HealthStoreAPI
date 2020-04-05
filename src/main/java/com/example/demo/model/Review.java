@@ -23,6 +23,20 @@ public class Review {
 	Product product;
 	
 	
+	
+	
+	public Review() {
+		super();
+	}
+
+
+	public Review(String comment, int rating) {
+		super();
+		this.comment = comment;
+		this.rating = rating;
+	}
+	
+	
 	public int getReviewId() {
 		return reviewId;
 	}

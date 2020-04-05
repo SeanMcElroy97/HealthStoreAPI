@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Product;
+import com.example.demo.model.Review;
 import com.example.demo.services.ProductService;
 
 @RestController
@@ -22,12 +23,21 @@ public class ProductController {
 		return "hi";
 	}
 	
-	@PostMapping("/createTest")
+	@PostMapping("/createProductTest")
 	public String testCreateProduct() {
 		
 		Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
 		mProductService.createProduct(p);
 		return p.toString();
 		
+	}
+	
+	@PostMapping("/createReviewTest")
+	public String testAddComment() {
+		//find Product
+		Product foundProduct = mProductService.findProductByID(2).get();
+		foundProduct.addReview(new Review("What a great product", 4));
+		mProductService.updateProduct(foundProduct);
+		return foundProduct.toString();
 	}
 }
