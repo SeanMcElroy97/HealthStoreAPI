@@ -24,10 +24,5 @@ public class CustomerController {
 		return "test customer";
 	}
 	
-	@GetMapping("/newtestcustomer/{email}")
-	public String testcreateNewCustomer(@PathVariable("email") String email) {
-		Customer cust = new Customer(email, "password", "21 whitehouse avenue", "12345678");
-		return mCustomerService.createNewCustomerEntity(cust);
-		 
-	}
+
 }
