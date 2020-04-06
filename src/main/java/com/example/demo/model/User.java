@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +12,10 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(unique=true)
 	private String email;
 	private String password;
+	private String roles;
 	
 	
 	public int getId() {
@@ -33,7 +36,14 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRoles() {
+		return roles;
+	}
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
 
+	
 	
 	
 }
