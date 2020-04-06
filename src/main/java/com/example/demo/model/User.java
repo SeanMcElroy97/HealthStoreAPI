@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class User {
+public abstract class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +18,8 @@ public class User {
 	private String email;
 	private String password;
 	private String roles;
+	
+	
 	
 	
 	public int getId() {
@@ -42,6 +46,8 @@ public class User {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+
+	
 
 	
 	

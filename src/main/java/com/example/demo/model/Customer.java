@@ -14,6 +14,23 @@ public class Customer extends User{
 	private String cardNumber;
 	
 	
+	
+	
+	public Customer() {
+		super();
+	}
+
+
+	public Customer(String email, String password, String shippingAddress, String cardNumber) {
+		super();
+		super.setEmail(email);
+		super.setPassword(password);
+		super.setRoles("ROLE_CUSTOMER");
+		this.shippingAddress = shippingAddress;
+		this.cardNumber = cardNumber;
+	}
+	
+	
 	@OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Order> orders;
 	
@@ -41,6 +58,15 @@ public class Customer extends User{
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Customer [shippingAddress=" + shippingAddress + ", cardNumber=" + cardNumber + ", orders=" + orders
+				+ "]";
+	}
+	
+	
 	
 	
 
