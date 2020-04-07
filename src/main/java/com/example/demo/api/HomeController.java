@@ -52,7 +52,7 @@ public class HomeController {
 	public String testcreateNewCustomer() {
 		Customer cust = new Customer("jj@email", "password", "21 whitehouse avenue", "12345678");
 		return mCustomerService.createNewCustomerEntity(cust);
-		 
+	
 	}
 	
 	@PostMapping("/authenticate")
