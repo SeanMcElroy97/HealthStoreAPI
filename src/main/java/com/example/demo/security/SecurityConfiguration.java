@@ -9,9 +9,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.example.demo.filters.JWTRequestFilter;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
@@ -19,6 +23,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	UserDetailsService userDetailsService;
 
+	@Autowired
+	private JWTRequestFilter jwtRequestFilter;
+	
+	
 	//Authentication method
 	@Override
 	protected void configure(AuthenticationManagerBuilder authmb) throws Exception {
@@ -36,7 +44,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 			.authorizeRequests()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
-			.antMatchers(HttpMethod.POST, "/**").permitAll();
+			.antMatchers(HttpMethod.POST, "/**").permitAll()
+			.and()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 		
 	}
 	
