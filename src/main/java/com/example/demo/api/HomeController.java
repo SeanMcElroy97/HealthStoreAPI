@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Customer;
 import com.example.demo.model.HealthShopUserDetails;
 import com.example.demo.model.authentication.AuthenticationRequest;
+import com.example.demo.model.authentication.AuthenticationResponse;
 import com.example.demo.repositories.CustomerRepo;
 import com.example.demo.services.CustomerService;
 import com.example.demo.services.HealthShopUserDetailsService;
+import com.example.demo.util.JwtUtil;
 
 @RestController("/")
 public class HomeController {
@@ -30,6 +33,8 @@ public class HomeController {
 	@Autowired
 	HealthShopUserDetailsService healthShopUserDetailsService;
 	
+	@Autowired
+	private JwtUtil jwtTokenUtil;
 	
 	///APIs
 	
@@ -61,8 +66,13 @@ public class HomeController {
 			throw new Exception("Incorrect email or password", e);
 		}
 		
-		final HealthShopUserDetails userDetails = HealthShopUserDetailsService.
-		return null;
+		final UserDetails userDetails = healthShopUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
+		
+		final String jwt = jwtTokenUtil.generateToken(userDetails);
+		
+		
+		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		
 		
 	}
 
