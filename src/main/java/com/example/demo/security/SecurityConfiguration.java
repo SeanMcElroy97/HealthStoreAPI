@@ -3,6 +3,7 @@ package com.example.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,8 +20,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	//Authentication method
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+	protected void configure(AuthenticationManagerBuilder authmb) throws Exception {
+		authmb.userDetailsService(userDetailsService);
 		//No out of the box for JPA authentication
 	}
 
@@ -30,10 +31,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		//ADMIN can access customer methods
-		http.authorizeRequests()
-			.antMatchers("/admin").hasRole("ADMIN")
-			.antMatchers("/user").hasAnyRole("ADMIN", "CUSTOMER")
-			.antMatchers("/").permitAll()
+		http.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
+			.antMatchers(HttpMethod.POST, "/**").permitAll()
 			.and().formLogin();
 	}
 	

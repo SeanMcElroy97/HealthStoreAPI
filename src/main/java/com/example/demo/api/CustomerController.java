@@ -19,7 +19,7 @@ public class CustomerController {
 	@Autowired
 	CustomerService mCustomerService;
 
-	@GetMapping("/test")
+	@GetMapping("")
 	public String test() {
 		return "test customer";
 	}

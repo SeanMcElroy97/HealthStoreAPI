@@ -10,7 +10,7 @@ import com.example.demo.model.Customer;
 import com.example.demo.repositories.CustomerRepo;
 import com.example.demo.services.CustomerService;
 
-@RestController
+@RestController("/")
 public class HomeController {
 	
 	@Autowired
@@ -21,8 +21,12 @@ public class HomeController {
 		return "Home controller reached";
 	}
 	
+	@GetMapping("/dos")
+	public String testDos() {
+		return "reached dos";
+	}
 	
-	@PostMapping("/newcustomer")
+	@PostMapping("/newcust")
 	public String testcreateNewCustomer() {
 		Customer cust = new Customer("jj@email", "password", "21 whitehouse avenue", "12345678");
 		return mCustomerService.createNewCustomerEntity(cust);

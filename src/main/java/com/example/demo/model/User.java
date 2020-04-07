@@ -18,6 +18,8 @@ public abstract class User {
 	private String email;
 	private String password;
 	private String roles;
+	private boolean active;
+
 	
 	
 	
@@ -46,7 +48,14 @@ public abstract class User {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
+	
 	
 
 	
