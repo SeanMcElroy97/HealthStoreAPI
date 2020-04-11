@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,6 +52,31 @@ public class TestController {
 		
 		
 		return lineItem.toString();
+		
+	}
+	
+	@PutMapping("/lineItem/{lineItemID}/adjustStock{qty}")
+	public void testCreateProduct(@PathVariable("lineItemID") int lineItemID , @PathVariable("qty") int qty) {
+		
+		//Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
+		//mProductService.createProduct(newProd);
+		
+		if(mLineItemRepo.existsById(lineItemID)) {
+			LineItem lineItem = mLineItemRepo.findById(lineItemID).get();
+			int lineItemLeftoverStock = lineItem.getQuantity()  + qty ;
+			
+			if(lineItemLeftoverStock<0) {
+				String notEnouhStockStr = "Dont'have enough stock";
+			}else {
+				lineItem.setQuantity(lineItemLeftoverStock);
+				mLineItemRepo.save(lineItem);
+			}
+			
+		}
+		
+		
+		
+		//return lineItem.toString();
 		
 	}
 	
