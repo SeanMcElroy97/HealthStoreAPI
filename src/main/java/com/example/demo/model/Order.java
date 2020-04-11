@@ -21,8 +21,8 @@ public class Order {
 	private int id;
 	
 	@ManyToMany
-	@JoinTable(name = "order_product", joinColumns = { @JoinColumn(name = "fk_order")}, inverseJoinColumns = {@JoinColumn(name = "fk_product")})
-	private List<Product> products = new ArrayList<>();
+	@JoinTable(name = "order_items", joinColumns = { @JoinColumn(name = "fk_orderID")}, inverseJoinColumns = {@JoinColumn(name = "fk_lineItemID")})
+	private List<LineItem> orderItems = new ArrayList<>();
 	
 	//Each order is attached to one customer.
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -35,37 +35,55 @@ public class Order {
 		super();
 	}
 
-	public Order(List<Product> products, Customer purchaser) {
+
+
+	public Order(int id, List<LineItem> orderItems, Customer purchaser) {
 		super();
-		this.products = products;
+		this.id = id;
+		this.orderItems = orderItems;
 		this.purchaser = purchaser;
 	}
 
-	//Getters and Setters
-	
+
+
 	public int getId() {
 		return id;
 	}
+
+
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+
+
+	public List<LineItem> getOrderItems() {
+		return orderItems;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+
+
+	public void setOrderItems(List<LineItem> orderItems) {
+		this.orderItems = orderItems;
 	}
+
+
 
 	public Customer getPurchaser() {
 		return purchaser;
 	}
 
+
+
 	public void setPurchaser(Customer purchaser) {
 		this.purchaser = purchaser;
 	}
+	
+	
+	
+
+	
 	
 	
 	
