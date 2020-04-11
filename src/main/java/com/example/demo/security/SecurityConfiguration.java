@@ -21,7 +21,7 @@ import com.example.demo.filters.JWTRequestFilter;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
-	UserDetailsService userDetailsService;
+	UserDetailsService springUserDetailsService;
 
 	@Autowired
 	private JWTRequestFilter jwtRequestFilter;
@@ -30,8 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	//Authentication method
 	@Override
 	protected void configure(AuthenticationManagerBuilder authmb) throws Exception {
-		authmb.userDetailsService(userDetailsService);
-		//No out of the box for JPA authentication
+		authmb.userDetailsService(springUserDetailsService);
+		//No out of the box for JPA auth
 	}
 
 	

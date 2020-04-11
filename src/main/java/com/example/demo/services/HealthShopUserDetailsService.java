@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.model.Admin;
 import com.example.demo.model.Customer;
 import com.example.demo.model.HealthShopUserDetails;
 import com.example.demo.repositories.CustomerRepo;
@@ -21,6 +23,10 @@ public class HealthShopUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// call the jpa method for retrieving user
+		
+		if(email.equals("admin@healthstore.com")) {
+			return new HealthShopUserDetails(new Admin("admin@healthstore.com", "food"));
+		}
 		
 		if(customerRepo.existsCustomerByEmailIgnoreCase(email)) {
 		Optional<Customer> userCustomer = customerRepo.findByEmail(email);

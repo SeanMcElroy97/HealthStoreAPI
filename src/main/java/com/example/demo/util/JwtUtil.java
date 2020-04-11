@@ -18,6 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil {
 
 	//Hardcoded for test
+	//May have to change for app
     private String SECRET_KEY = "secret";
 
     //Returns username or email 

@@ -46,7 +46,7 @@ public class JWTRequestFilter extends OncePerRequestFilter{
 		}
 		
 		
-		//Valuidate USer details 
+		//Validate USer details 
 		if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			
 			HealthShopUserDetails userDetails = (HealthShopUserDetails) this.userDetailsService.loadUserByUsername(email);
@@ -56,8 +56,8 @@ public class JWTRequestFilter extends OncePerRequestFilter{
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
