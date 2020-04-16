@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Customer;
-import com.example.demo.model.Order;
+import com.example.demo.model.PurchaseOrder;
 import com.example.demo.services.CustomerService;
 
 @RestController

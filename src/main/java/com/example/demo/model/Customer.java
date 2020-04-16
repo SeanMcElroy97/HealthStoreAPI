@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,16 +35,16 @@ public class Customer extends User{
 	
 	
 	@OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Order> orders;
+	private List<PurchaseOrder> orders = new ArrayList();
 	
 	//Utility Methods for adding + removing reviews. synchronizes both sides
-    public void addOrder(Order order) {
+    public void addOrder(PurchaseOrder order) {
     	orders.add(order);
     	order.setPurchaser(this);
     }
     
 
-	public void removeReview(Order order) {
+	public void removeOrder(PurchaseOrder order) {
        orders.remove(order);
        order.setPurchaser(null);
     }

@@ -27,7 +27,7 @@ public class ProductController {
 	public String testCreateProduct() {
 		
 		Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
-		mProductService.createProduct(p);
+		//mProductService.createProduct(p);
 		return p.toString();
 		
 	}
@@ -37,7 +37,7 @@ public class ProductController {
 		//find Product
 		Product foundProduct = mProductService.findProductByID(2).get();
 		foundProduct.addReview(new Review("What a great product", 4));
-		mProductService.updateProduct(foundProduct);
+		//mProductService.updateProduct(foundProduct);
 		return foundProduct.toString();
 	}
 }

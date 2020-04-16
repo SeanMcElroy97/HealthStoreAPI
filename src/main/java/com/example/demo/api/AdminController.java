@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Customer;
 import com.example.demo.model.LineItem;
-import com.example.demo.model.Order;
+import com.example.demo.model.PurchaseOrder;
 import com.example.demo.model.Product;
 import com.example.demo.model.authentication.AuthenticationRequest;
 import com.example.demo.repositories.LineItemRepo;
@@ -39,7 +39,7 @@ public class AdminController {
 	public String createProduct(@RequestBody Product newProd) {
 		
 		//Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
-		mProductService.createProduct(newProd);
+		//mProductService.createProduct(newProd);
 		return newProd.toString();
 		
 	}

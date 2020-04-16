@@ -1,5 +1,8 @@
 package com.example.demo.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.LineItem;
 import com.example.demo.model.Product;
+import com.example.demo.model.StockItem;
 import com.example.demo.repositories.LineItemRepo;
+import com.example.demo.services.CustomerService;
 import com.example.demo.services.ProductService;
 
 @RestController
@@ -21,6 +26,9 @@ public class TestController {
 
 	@Autowired
 	ProductService mProductService;
+	
+	@Autowired
+	CustomerService mCustomerService;
 	
 	@Autowired
 	LineItemRepo mLineItemRepo;
@@ -36,48 +44,59 @@ public class TestController {
 	}
 	
 	
+	@GetMapping("/Stock")
+	public List<StockItem> getAllStock(){
+		return mProductService.retrieveAllSTock();
+				
+	}
+	
+	
+	@GetMapping("/Stock/{title}")
+	public StockItem getStockByProductTitle(@PathVariable("title") String pTitle){
+		return mProductService.findStockItemByProductTitle(pTitle);
+				
+	}
+	
 	//TEST PASSED
 	@PostMapping("/createItem")
-	public String testCreateProduct(@RequestBody LineItem lineItem) {
+	public String testCreateLineItem() {
 		
-		//Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
+		 Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
+		 Product p2 = new Product("tititle2", "fakerer", 69.99, "Cultery", "imageLinkHere");
+		 StockItem stItem = new StockItem(p, 12);
+		 StockItem stItem2 = new StockItem(p2, 13);
+		 
 		//mProductService.createProduct(newProd);
-		
-		if(mLineItemRepo.existsLineItemByProductTitleIgnoreCase(lineItem.getProduct().getTitle())) {
-			return "Product with same title exists" ;
-		}else {
-			mLineItemRepo.save(lineItem);
-		}
+		 mProductService.createStockItem(stItem2.getProduct(), stItem2.getQtyHeld());
+		return mProductService.createStockItem(stItem.getProduct(), 8);
 		
 		
+		//System.out.println("HI");
+		//return "hi 2";
 		
-		return lineItem.toString();
 		
 	}
 	
-	@PutMapping("/lineItem/{lineItemID}/adjustStock{qty}")
-	public void testCreateProduct(@PathVariable("lineItemID") int lineItemID , @PathVariable("qty") int qty) {
+	@PutMapping("/stock/{StockItemID}/adjustStock{qty}")
+	public void testAdjustProductStock(@PathVariable("StockItemID") int id , @PathVariable("qty") int qty) {
 		
 		//Product p = new Product("fakeTitle", "fakeManufacturer", 99.99, "CategoryZ", "imageLinkHere");
 		//mProductService.createProduct(newProd);
 		
-		if(mLineItemRepo.existsById(lineItemID)) {
-			LineItem lineItem = mLineItemRepo.findById(lineItemID).get();
-			int lineItemLeftoverStock = lineItem.getQuantity()  + qty ;
-			
-			if(lineItemLeftoverStock<0) {
-				String notEnouhStockStr = "Dont'have enough stock";
-			}else {
-				lineItem.setQuantity(lineItemLeftoverStock);
-				mLineItemRepo.save(lineItem);
-			}
-			
-		}
+		String result = mProductService.AdjustProductStock(id, qty);
+				
+	}
+	
+	@GetMapping("/placeOrder")
+	public String getStockByProductTitle(){
+		String custEmail = "jj@email";
 		
+		ArrayList<LineItem> lineItems = new ArrayList<>();
 		
-		
-		//return lineItem.toString();
-		
+		lineItems.add(new LineItem(mProductService.findProductByID(2).get(), -3));
+		lineItems.add(new LineItem(mProductService.findProductByID(1).get(), -4));
+		return mCustomerService.createOrder(lineItems, custEmail);
+				
 	}
 	
 	

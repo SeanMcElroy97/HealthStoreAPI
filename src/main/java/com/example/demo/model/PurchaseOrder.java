@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,14 +15,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Order {
+public class PurchaseOrder {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@ManyToMany
-	@JoinTable(name = "order_items", joinColumns = { @JoinColumn(name = "fk_orderID")}, inverseJoinColumns = {@JoinColumn(name = "fk_lineItemID")})
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "purchase_order_items", joinColumns = { @JoinColumn(name = "fk_purchase_orderID")}, inverseJoinColumns = {@JoinColumn(name = "fk_lineItemID")})
 	private List<LineItem> orderItems = new ArrayList<>();
 	
 	//Each order is attached to one customer.
@@ -31,17 +32,15 @@ public class Order {
 	
 	
 	//Constructor
-	public Order() {
+	public PurchaseOrder() {
 		super();
 	}
 
 
-
-	public Order(int id, List<LineItem> orderItems, Customer purchaser) {
+//	Create this by customer
+	public PurchaseOrder(List<LineItem> orderItems) {
 		super();
-		this.id = id;
 		this.orderItems = orderItems;
-		this.purchaser = purchaser;
 	}
 
 
@@ -79,13 +78,6 @@ public class Order {
 	public void setPurchaser(Customer purchaser) {
 		this.purchaser = purchaser;
 	}
-	
-	
-	
-
-	
-	
-	
 	
 
 }

@@ -44,9 +44,11 @@ public class HomeController {
 	}
 	
 	@GetMapping("/dos")
-	public String testDos() {
+	public String testTwo() {
 		return "reached dos";
 	}
+	
+	///////
 	
 	@PostMapping("/newcust")
 	public String testcreateNewCustomer() {
