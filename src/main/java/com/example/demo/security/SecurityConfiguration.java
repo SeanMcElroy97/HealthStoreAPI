@@ -42,6 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		//ADMIN can access customer methods
 		http.csrf().disable()
 			.authorizeRequests()
+			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
 			.antMatchers(HttpMethod.POST, "/**").permitAll()

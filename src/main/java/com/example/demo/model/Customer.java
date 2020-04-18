@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Customer extends User{
+public class Customer{
 	
-		
+	@Id
+	private String email;
+	private String password;
+	private String roles = "ROLE_CUSTOMER";
+	private boolean active;
 	private String shippingAddress;
 	private String cardNumber;
 	
@@ -21,17 +27,19 @@ public class Customer extends User{
 	
 	public Customer() {
 		super();
+		this.roles="ROLE_CUSTOMER";
 	}
 
 
 	public Customer(String email, String password, String shippingAddress, String cardNumber) {
 		super();
-		super.setEmail(email);
-		super.setPassword(password);
-		super.setRoles("ROLE_CUSTOMER");
+		this.email = email;
+		this.password = password ;
+		this.roles = "ROLE_CUSTOMER";
 		this.shippingAddress = shippingAddress;
 		this.cardNumber = cardNumber;
 	}
+	
 	
 	
 	@OneToMany(mappedBy = "purchaser", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -48,26 +56,77 @@ public class Customer extends User{
        orders.remove(order);
        order.setPurchaser(null);
     }
-	
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getRoles() {
+		return roles;
+	}
+
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+
+
+	public boolean isActive() {
+		return active;
+	}
+
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+
 	public String getShippingAddress() {
 		return shippingAddress;
 	}
+
+
 	public void setShippingAddress(String shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
+
+
 	public String getCardNumber() {
 		return cardNumber;
 	}
+
+
 	public void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber;
 	}
 
 
-	@Override
-	public String toString() {
-		return "Customer [shippingAddress=" + shippingAddress + ", cardNumber=" + cardNumber + ", orders=" + orders
-				+ "]";
+	public List<PurchaseOrder> getOrders() {
+		return orders;
 	}
+
+
+	public void setOrders(List<PurchaseOrder> orders) {
+		this.orders = orders;
+	}
+
 	
 	
 	

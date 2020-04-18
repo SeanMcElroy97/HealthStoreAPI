@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import com.example.demo.services.HealthShopUserDetailsService;
 import com.example.demo.util.JwtUtil;
 
 @RestController("/")
+@CrossOrigin(origins = "*")
 public class HomeController {
 	
 	@Autowired
@@ -51,15 +53,20 @@ public class HomeController {
 	///////
 	
 	@PostMapping("/newcust")
-	public String testcreateNewCustomer() {
-		Customer cust = new Customer("jj@email", "password", "21 whitehouse avenue", "12345678");
-		return mCustomerService.createNewCustomerEntity(cust);
+	public ResponseEntity<?> testcreateNewCustomer(@RequestBody Customer cust) throws Exception {
+		//Customer cust = new Customer("jj@email", "password", "21 whitehouse avenue", "12345678");
+		if(mCustomerService.createNewCustomerEntity(cust)==true) {
+			return createAuthenticationToken(new AuthenticationRequest(cust.getEmail(), cust.getPassword()));
+		}else {
+			throw new Exception("User already exists with that email");
+		}
+		
 	
 	}
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-		
+
 		try {
 		authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authenticationRequest.getEmail(), authenticationRequest.getPassword())
@@ -71,11 +78,17 @@ public class HomeController {
 		final UserDetails userDetails = healthShopUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
-		
-		
+
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
 		
 		
 	}
+	
+//	@PostMapping("/authenticate")
+//	public String createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+//		return authenticationRequest.getEmail() + " " + authenticationRequest.getPassword();
+//		
+//		
+//	}
 
 }

@@ -13,6 +13,8 @@ import com.example.demo.model.PurchaseOrder;
 import com.example.demo.model.StockItem;
 import com.example.demo.repositories.CustomerRepo;
 
+import net.bytebuddy.asm.Advice.Return;
+
 @Service
 public class CustomerService {
 	
@@ -22,12 +24,12 @@ public class CustomerService {
 	@Autowired
 	ProductService productService;
 	
-	public String createNewCustomerEntity(Customer c){
+	public boolean createNewCustomerEntity(Customer c){
 		if (customerRepository.existsCustomerByEmailIgnoreCase(c.getEmail())) {
-			return "User with same email exists";
+			return false;
 		}else {
 			customerRepository.save(c);
-			return "success";
+			return true;
 		}
 	}
 	

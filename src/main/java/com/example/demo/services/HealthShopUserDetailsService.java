@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Admin;
+//import com.example.demo.model.Admin;
 import com.example.demo.model.Customer;
 import com.example.demo.model.HealthShopUserDetails;
 import com.example.demo.repositories.CustomerRepo;
@@ -20,12 +21,14 @@ public class HealthShopUserDetailsService implements UserDetailsService{
 	@Autowired
 	CustomerRepo customerRepo;
 
+	
+	//Method to get user details from jpa
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// call the jpa method for retrieving user
 		
-		if(email.equals("admin@healthstore.com")) {
-			return new HealthShopUserDetails(new Admin("admin@healthstore.com", "food"));
+		if(email.equals("adminHealth")) {
+			return new HealthShopUserDetails(Admin.getADMIN_SINGLE_INSTANCE());
 		}
 		
 		if(customerRepo.existsCustomerByEmailIgnoreCase(email)) {

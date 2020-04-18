@@ -21,11 +21,21 @@ public class HealthShopUserDetails implements UserDetails{
 	
 	public HealthShopUserDetails() {}
 
-	public HealthShopUserDetails(User user) {
+	public HealthShopUserDetails(Customer user) {
 		this.email = user.getEmail();
 		this.password = user.getPassword();
 		this.active = user.isActive();
 		this.authorities = Arrays.stream(user.getRoles().split(","))
+							.map(SimpleGrantedAuthority:: new)
+							.collect(Collectors.toList());
+	}
+	
+	//May be removed
+	public HealthShopUserDetails(Admin admin) {
+		this.email = admin.getInstance().email;
+		this.password = admin.getInstance().password;
+		this.active = true;
+		this.authorities = Arrays.stream(admin.getInstance().getRoles().split(","))
 							.map(SimpleGrantedAuthority:: new)
 							.collect(Collectors.toList());
 	}
