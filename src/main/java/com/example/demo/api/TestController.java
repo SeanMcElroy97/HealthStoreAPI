@@ -46,7 +46,7 @@ public class TestController {
 	
 	@GetMapping("/Stock")
 	public List<StockItem> getAllStock(){
-		return mProductService.retrieveAllSTock();
+		return mProductService.retrieveAllStock();
 				
 	}
 	

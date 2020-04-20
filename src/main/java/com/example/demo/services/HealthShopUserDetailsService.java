@@ -27,8 +27,9 @@ public class HealthShopUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		// call the jpa method for retrieving user
 		
-		if(email.equals("adminHealth")) {
-			return new HealthShopUserDetails(Admin.getADMIN_SINGLE_INSTANCE());
+		if(email.equalsIgnoreCase("adminHealth")) {
+//			System.out.println("AdminUser email hit");
+			return new HealthShopUserDetails(new Admin());
 		}
 		
 		if(customerRepo.existsCustomerByEmailIgnoreCase(email)) {

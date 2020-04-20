@@ -1,5 +1,6 @@
 package com.example.demo.api;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Customer;
 import com.example.demo.model.PurchaseOrder;
+import com.example.demo.model.StockItem;
 import com.example.demo.services.CustomerService;
+import com.example.demo.services.ProductService;
 
 @RestController
 @RequestMapping("/customer")
@@ -20,11 +23,19 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerService mCustomerService;
+	
+	@Autowired
+	ProductService mProductService;
 
 	@GetMapping
 	public String test() {
 		System.out.println("cust method hit");
 		return "test customer";
+	}
+	
+	@GetMapping("/viewALLProducts")
+	public List<StockItem> getAllStock(){
+		return mProductService.retrieveAllStock();
 	}
 	
 

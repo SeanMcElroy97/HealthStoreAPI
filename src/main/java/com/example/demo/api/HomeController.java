@@ -77,9 +77,10 @@ public class HomeController {
 		
 		final UserDetails userDetails = healthShopUserDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 		
+		
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new AuthenticationResponse(jwt));
+		return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getAuthorities().toString()));
 		
 		
 	}

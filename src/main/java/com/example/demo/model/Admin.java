@@ -4,29 +4,19 @@ import javax.persistence.Id;
 
 public class Admin {
 	
-	private static Admin ADMIN_SINGLE_INSTANCE = null;
 
-	@Id
-	String email;
-	String password;
-	String Roles;
+	private String email;
+	private String password;
+	private String Roles;
+	private boolean active;
 	
 	
-	private Admin() {
+	public Admin() {
 		super();
 		this.email = "adminHealth";
 		this.password = "adminPassword";
 		Roles = "ROLE_ADMIN";
-	}
-	
-	
-	public Admin getInstance() {
-		if (ADMIN_SINGLE_INSTANCE == null) {
-			ADMIN_SINGLE_INSTANCE = new Admin();
-		}
-			return ADMIN_SINGLE_INSTANCE;
-			
-		
+		this.active=true;
 	}
 
 
@@ -57,11 +47,6 @@ public class Admin {
 
 	public void setRoles(String roles) {
 		Roles = roles;
-	}
-
-
-	public static Admin getADMIN_SINGLE_INSTANCE() {
-		return ADMIN_SINGLE_INSTANCE;
 	}
 	
 	

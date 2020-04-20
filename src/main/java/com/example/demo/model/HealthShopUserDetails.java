@@ -32,10 +32,10 @@ public class HealthShopUserDetails implements UserDetails{
 	
 	//May be removed
 	public HealthShopUserDetails(Admin admin) {
-		this.email = admin.getInstance().email;
-		this.password = admin.getInstance().password;
+		this.email = admin.getEmail();
+		this.password = admin.getPassword();
 		this.active = true;
-		this.authorities = Arrays.stream(admin.getInstance().getRoles().split(","))
+		this.authorities = Arrays.stream(admin.getRoles().split(","))
 							.map(SimpleGrantedAuthority:: new)
 							.collect(Collectors.toList());
 	}

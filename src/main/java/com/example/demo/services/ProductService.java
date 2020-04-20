@@ -37,6 +37,7 @@ public class ProductService {
 		return "Couldnt create product. Product already exists";
 	}
 	
+	
 	public boolean stockItemAlreadyExists(StockItem StockItem) {
 		if(mStockRepo.existsStockItemByProductTitleIgnoreCase(StockItem.getProduct().getTitle())){
 			return true;
@@ -77,7 +78,7 @@ public class ProductService {
 	}
 	
 	
-	public List<StockItem> retrieveAllSTock(){
+	public List<StockItem> retrieveAllStock(){
 		return mStockRepo.findAll();
 		
 	}
