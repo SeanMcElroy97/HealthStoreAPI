@@ -33,6 +33,9 @@ public class AdminController {
 	ProductService mProductService;
 	
 	@Autowired
+	CustomerService mCustomerService;
+	
+	@Autowired
 	StockItemRepo mStockItemRepo;
 	
 
@@ -76,6 +79,17 @@ public class AdminController {
 	@GetMapping("/all")
 	public List<StockItem> retrieveAll(){
 		return mProductService.retrieveAllStock();
+	}
+	
+	@GetMapping("/getAllCustomers")
+	public List<Customer> retrievAllCustomers(){
+		
+		List<Customer> allCusts = mCustomerService.getAllCustomers();
+		
+		System.out.println(allCusts.size());
+		return allCusts;
+		
+		
 	}
 
 }

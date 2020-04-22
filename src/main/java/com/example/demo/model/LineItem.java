@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +29,26 @@ public class LineItem {
 	@JoinColumn(name = "ID_product")
 	private Product product;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Customer customer;
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	
+//	private String STRCustomerID;
+//	private String STRProductID;
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+
+
+
 	private int quantity;
 	
 	//Constructors

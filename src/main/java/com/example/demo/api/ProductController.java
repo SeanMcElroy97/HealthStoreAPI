@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,11 @@ public class ProductController {
 	@Autowired
 	ProductService mProductService;
 	
+	
+	@GetMapping("/findProductByID/{id}")
+	public Product findProductById(@PathVariable int id) {
+		return mProductService.findProductByID(id).get();
+	}
 	
 	@GetMapping("/test")
 	public String test(){

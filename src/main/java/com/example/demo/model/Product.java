@@ -50,10 +50,6 @@ public class Product {
 
 
 
-
-
-
-
 	//Utility Methods for adding + removing reviews. synchronizes both sides
     public void addReview(Review review) {
     	productReviews.add(review);

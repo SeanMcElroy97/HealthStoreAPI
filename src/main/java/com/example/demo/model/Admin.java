@@ -2,8 +2,11 @@ package com.example.demo.model;
 
 import javax.persistence.Id;
 
+import org.springframework.aop.aspectj.SingletonAspectInstanceFactory;
+
 public class Admin {
 	
+	private static Admin mAdminInstance = null;
 
 	private String email;
 	private String password;
@@ -11,12 +14,21 @@ public class Admin {
 	private boolean active;
 	
 	
-	public Admin() {
+	private Admin() {
 		super();
 		this.email = "adminHealth";
 		this.password = "adminPassword";
 		Roles = "ROLE_ADMIN";
 		this.active=true;
+	}
+	
+	public static Admin getInstance() {
+		
+		if(mAdminInstance == null) {
+			mAdminInstance = new Admin();
+		}
+		
+		return mAdminInstance;
 	}
 
 
@@ -25,9 +37,9 @@ public class Admin {
 	}
 
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
 
 	public String getPassword() {
@@ -35,9 +47,9 @@ public class Admin {
 	}
 
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
 
 
 	public String getRoles() {
@@ -45,9 +57,9 @@ public class Admin {
 	}
 
 
-	public void setRoles(String roles) {
-		Roles = roles;
-	}
+//	public void setRoles(String roles) {
+//		Roles = roles;
+//	}
 	
 	
 	

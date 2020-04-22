@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Customer{
@@ -23,7 +24,19 @@ public class Customer{
 	private String cardNumber;
 	
 	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "customer")
+	private List<LineItem> shoppingCart = new ArrayList();
 	
+    public void addItemToCart(LineItem lItem) {
+    	shoppingCart.add(lItem);
+    	lItem.setCustomer(this);
+    }
+    
+
+	public void removeItemFromCart(LineItem lItem) {
+       orders.remove(lItem);
+       lItem.setCustomer(null);
+    }
 	
 	public Customer() {
 		super();
@@ -38,6 +51,8 @@ public class Customer{
 		this.roles = "ROLE_CUSTOMER";
 		this.shippingAddress = shippingAddress;
 		this.cardNumber = cardNumber;
+		
+		
 	}
 	
 	
@@ -125,6 +140,16 @@ public class Customer{
 
 	public void setOrders(List<PurchaseOrder> orders) {
 		this.orders = orders;
+	}
+
+
+	public List<LineItem> getShoppingCart() {
+		return shoppingCart;
+	}
+
+
+	public void setShoppingCart(List<LineItem> shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 
 	

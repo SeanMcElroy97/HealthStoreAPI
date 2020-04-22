@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sound.sampled.Line;
 
@@ -59,5 +60,18 @@ public class CustomerService {
 		return "Order created";
 	}
 	
+	
+	public List<Customer> getAllCustomers(){
+		return customerRepository.findAll();
+	}
+	
+	public Customer findByID(String email) {
+		return customerRepository.findByEmail(email).get();
+		
+	}
+	
+	public void updateCustomer(Customer c) {
+	customerRepository.save(c);
+	}
 
 }

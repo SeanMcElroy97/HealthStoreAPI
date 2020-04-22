@@ -29,7 +29,7 @@ public class HealthShopUserDetailsService implements UserDetailsService{
 		
 		if(email.equalsIgnoreCase("adminHealth")) {
 //			System.out.println("AdminUser email hit");
-			return new HealthShopUserDetails(new Admin());
+			return new HealthShopUserDetails(Admin.getInstance());
 		}
 		
 		if(customerRepo.existsCustomerByEmailIgnoreCase(email)) {
